@@ -1,0 +1,54 @@
+#include <iostream>
+#include <vector>
+
+bool searchNumberIn2DSortedArray(const std::vector<std::vector<int>>& matrix, int target) {
+    int rows = matrix.size();
+    if (rows == 0) return false;
+    
+    int cols = matrix[0].size();
+    
+    int left = 0;
+    int right = rows * cols - 1;
+    
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        int mid_element = matrix[mid / cols][mid % cols];
+        
+        if (mid_element == target) {
+            return true;
+        } else if (mid_element < target) {
+            left = mid + 1;
+        } else {
+            right = mid - 1;
+        }
+    }
+    
+    return false;
+}
+
+int main() {
+    int rows, cols;
+    std::cout << "Введите количество строк и столбцов для матрицы: ";
+    std::cin >> rows >> cols;
+    
+    std::vector<std::vector<int>> matrix(rows, std::vector<int>(cols));
+    
+    std::cout << "Введите элементы отсортированной матрицы:" << std::endl;
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            std::cin >> matrix[i][j];
+        }
+    }
+    
+    int target;
+    std::cout << "Введите число для поиска: ";
+    std::cin >> target;
+    
+    if (searchNumberIn2DSortedArray(matrix, target)) {
+        std::cout << "Число найдено в матрице." << std::endl;
+    } else {
+        std::cout << "Число не найдено в матрице." << std::endl;
+    }
+    
+    return 0;
+}
